@@ -1,6 +1,5 @@
 
 """ The distiller to distil the student.
-    Adapted in part from Facebook, Inc XLM model (https://github.com/facebookresearch/XLM)
 """
 import math
 import os
