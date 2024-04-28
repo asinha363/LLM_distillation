@@ -8,9 +8,9 @@ from transformers import LlamaForCausalLM, AutoTokenizer
 class Config:
     teacher_model_name = 'allenai/llama-13b'
     student_model_config = 'llama-tiny'
-    num_epochs = 3
-    batch_size = 4
-    learning_rate = 5e-5
+    num_epochs = 10
+    batch_size = 5
+    learning_rate = 5e-6
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Initialize models
