@@ -68,7 +68,6 @@ class LLaMA:
         assert max_prompt_len <= self.args.max_seq_len, f"prompt length must be less than or equal to {self.args.max_seq_len}"
         total_len = min(self.args.max_seq_len, max_gen_len + max_prompt_len)
 
-        # Create the list that will contain the generated tokens, along with the initial prompt tokens
         pad_id = self.tokenizer.pad_id()
         tokens = torch.full((batch_size, total_len), pad_id, dtype=torch.long, device=device)
         for k, t in enumerate(prompt_tokens):
@@ -101,7 +100,7 @@ class LLaMA:
         out_tokens = []
         out_text = []
         for prompt_index, current_prompt_tokens in enumerate(tokens.tolist()):
-            # Cut to the EOS token, if present
+         
             if self.tokenizer.eos_id in current_prompt_tokens:
                 eos_idx = current_prompt_tokens.index(self.tokenizer.eos_id)
                 current_prompt_tokens = current_prompt_tokens[:eos_idx]
@@ -115,7 +114,6 @@ class LLaMA:
         # (B, vocab_size)
         probs_sum = torch.cumsum(probs_sort, dim=-1)
         # (B, vocab_size)
-        # (Substracting "probs_sort" shifts the cumulative sum by 1 position to the right before masking)
         mask = probs_sum - probs_sort > p 
         # Zero out all the probabilities of tokens that are not selected by the Top P
         probs_sort[mask] = 0.0 
